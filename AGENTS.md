@@ -11,7 +11,7 @@ This repository follows these guidelines for contributions by AI agents or human
 
 2. **Simplicity First**: Prefer simpler implementations over overly complex solutions.
 
-3. **Run Tests**: Always run tests before committing to ensure functionality and catch regressions. Use `pytest --cov=whispr tests` for Python tests.
+3. **Run Tests**: Always run tests before committing to ensure functionality and catch regressions. Use `pytest tests` for Python tests.
 
 4. **Uniform Structure**: Maintain a consistent code structure across modules so files and packages are easy to navigate.
 
