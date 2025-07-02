@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "md-to-confluence"
+version = "0.1.0"
+description = "Convert Markdown to Confluence wiki markup and copy to clipboard"
+authors = [
+    {name = "Cybrota", email = "noreply@example.com"},
+]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.8"
+dependencies = [
+    "pypandoc>=1.7",
+    "pyperclip>=1.8",
+]
+
+[project.scripts]
+md-to-confluence = "md_to_confluence.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["md_to_confluence"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+
+[tool.bandit]
+skips = ["B101"]
