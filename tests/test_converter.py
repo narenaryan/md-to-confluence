@@ -3,12 +3,8 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-import sys
-from pathlib import Path
 
 import pyperclip
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import md_to_confluence.converter as conv
 
