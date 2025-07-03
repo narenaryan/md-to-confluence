@@ -6,6 +6,7 @@
 
 import pyperclip
 from pathlib import Path
+import zipfile
 
 import md_to_confluence.converter as conv
 
@@ -19,12 +20,21 @@ def test_convert(tmp_path, monkeypatch):
     monkeypatch.setattr(pyperclip, "copy", lambda text: None)
 
     def fake_convert_text(*args, **kwargs):
-        Path(kwargs["outputfile"]).write_text("doc")
+        with zipfile.ZipFile(Path(kwargs["outputfile"]), "w") as zf:
+            zf.writestr(
+                "docProps/app.xml",
+                "<Properties><AppVersion>12.0000</AppVersion></Properties>",
+            )
+            zf.writestr("word/document.xml", "<w:document/>")
         return ""
+
+    monkeypatch.setattr(conv.pypandoc, "ensure_pandoc_installed", lambda: None)
 
     monkeypatch.setattr(conv.pypandoc, "convert_text", fake_convert_text)
 
     result = conv.convert(input_file, output_file)
 
-    assert output_file.read_text() == "doc"
+    with zipfile.ZipFile(output_file) as zf:
+        data = zf.read("docProps/app.xml").decode()
+    assert "<AppVersion>16.0000</AppVersion>" in data
     assert result == output_file
