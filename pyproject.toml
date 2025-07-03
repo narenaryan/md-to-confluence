@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "md-to-confluence"
 version = "0.1.0"
-description = "Convert Markdown files to Word (.docx) documents"
+description = "Convert Markdown files to Word (.doc) documents"
 authors = [
     {name = "Cybrota", email = "noreply@example.com"},
 ]

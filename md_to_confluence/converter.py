@@ -15,7 +15,7 @@ from pyperclip import PyperclipException
 
 
 def convert(input_path: str | Path, output_path: str | Path) -> Path:
-    """Convert markdown file to a Word ``.docx`` document.
+    """Convert markdown file to a Word ``.doc`` document.
 
     Parameters
     ----------
@@ -41,7 +41,7 @@ def convert(input_path: str | Path, output_path: str | Path) -> Path:
     # Convert using pandoc to retain complex entities such as tables.
     pypandoc.convert_text(
         text,
-        "docx",
+        "doc",
         format="md",
         outputfile=str(output_file),
     )
