@@ -1,30 +1,32 @@
 # md-to-confluence
 
-`md-to-confluence` is a command line tool that converts Markdown files into Word
-(`.docx`) documents. The tool relies on Pandoc and provides a simple interface
-for local documentation workflows.
+`md-to-confluence` provides a command line tool that converts Markdown files
+into Word (`.docx`) documents. The initial implementation used Python and
+Pandoc. A Go based CLI is now available which relies on Pandoc and LibreOffice
+for improved compatibility with Confluence imports.
 
 ## Build requirements
 
-- **Python 3.8 or later**
-- **Hatch** for packaging and building. Install it using `pip install hatch` or
-  `pipx install hatch`.
-
-Runtime dependencies such as `pypandoc-binary` and `pyperclip` are installed
-when you install the package.
+- **Go 1.21 or later**
+- **Python 3.8 or later** (only required for legacy version and tests)
+  Runtime dependencies such as `pypandoc-binary` and `pyperclip` are installed
+  when you install the Python package.
 
 ## Building from source with Hatch
 
-1. Install the build requirements listed above.
-2. From the repository root, run:
+1. Install Go and the other build requirements listed above.
+2. Build the Go CLI using:
    ```bash
-   hatch build
+   go build ./cmd/mdtoconf
    ```
-   This creates distribution archives inside the `dist/` directory.
+   This produces a binary named `mdtoconf`.
+3. The Python package can still be built with Hatch if required.
 
 ## Installing the package
 
-After building, install the generated wheel into your environment:
+After building the Go binary you can install it with `go install` or copy the
+binary into your `PATH`. If building the Python package, install the generated
+wheel into your environment:
 
 ```bash
 pip install dist/md_to_confluence-0.1.0-py3-none-any.whl
@@ -42,7 +44,7 @@ The project uses Ruff for linting, Bandit for security checks and Pytest for
 unit tests. After installing these tools, run:
 
 ```bash
-md-to-confluence input.md output.docx
+mdtoconf -input input.md -output output.docx
 ```
 
 Now, one can import `output.docx` into Confluence by:
