@@ -5,6 +5,7 @@
 # you may not use this file except in compliance with the License.
 
 import pyperclip
+from pathlib import Path
 
 import md_to_confluence.converter as conv
 
@@ -12,13 +13,18 @@ import md_to_confluence.converter as conv
 def test_convert(tmp_path, monkeypatch):
     md_text = "# Title"
     input_file = tmp_path / "test.md"
-    output_file = tmp_path / "out.txt"
+    output_file = tmp_path / "out.docx"
     input_file.write_text(md_text)
 
     monkeypatch.setattr(pyperclip, "copy", lambda text: None)
-    monkeypatch.setattr(conv.pypandoc, "convert_text", lambda *a, **k: "h1. Title")
+
+    def fake_convert_text(*args, **kwargs):
+        Path(kwargs["outputfile"]).write_text("docx")
+        return ""
+
+    monkeypatch.setattr(conv.pypandoc, "convert_text", fake_convert_text)
 
     result = conv.convert(input_file, output_file)
 
-    assert output_file.read_text() == "h1. Title"
-    assert result == "h1. Title"
+    assert output_file.read_text() == "docx"
+    assert result == output_file
