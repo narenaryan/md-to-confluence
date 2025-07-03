@@ -3,7 +3,7 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-"""Conversion utilities for Markdown to Confluence."""
+"""Conversion utilities for Markdown to Word documents."""
 
 from __future__ import annotations
 
@@ -14,20 +14,20 @@ import pyperclip
 from pyperclip import PyperclipException
 
 
-def convert(input_path: str | Path, output_path: str | Path) -> str:
-    """Convert markdown file to Confluence wiki markup.
+def convert(input_path: str | Path, output_path: str | Path) -> Path:
+    """Convert markdown file to a Word ``.docx`` document.
 
     Parameters
     ----------
     input_path: str | Path
         Path to the Markdown file.
     output_path: str | Path
-        Where to store the generated Confluence markup.
+        Where to store the generated Word document.
 
     Returns
     -------
-    str
-        The generated markup as a string.
+    Path
+        Path to the generated Word document.
     """
 
     input_file = Path(input_path)
@@ -35,14 +35,21 @@ def convert(input_path: str | Path, output_path: str | Path) -> str:
 
     text = input_file.read_text()
 
-    # Convert using pandoc. The 'jira' format matches Confluence wiki markup.
-    confluence_text = pypandoc.convert_text(text, "jira", format="md")
+    # Ensure the pandoc binary is available.
+    pypandoc.ensure_pandoc_installed()
+
+    # Convert using pandoc to retain complex entities such as tables.
+    pypandoc.convert_text(
+        text,
+        "docx",
+        format="md",
+        outputfile=str(output_file),
+    )
 
     try:
-        pyperclip.copy(confluence_text)
+        pyperclip.copy(str(output_file))
     except PyperclipException:
         # Clipboard support is optional. Continue without failing.
         pass
 
-    output_file.write_text(confluence_text)
-    return confluence_text
+    return output_file
