@@ -13,18 +13,18 @@ import md_to_confluence.converter as conv
 def test_convert(tmp_path, monkeypatch):
     md_text = "# Title"
     input_file = tmp_path / "test.md"
-    output_file = tmp_path / "out.docx"
+    output_file = tmp_path / "out.doc"
     input_file.write_text(md_text)
 
     monkeypatch.setattr(pyperclip, "copy", lambda text: None)
 
     def fake_convert_text(*args, **kwargs):
-        Path(kwargs["outputfile"]).write_text("docx")
+        Path(kwargs["outputfile"]).write_text("doc")
         return ""
 
     monkeypatch.setattr(conv.pypandoc, "convert_text", fake_convert_text)
 
     result = conv.convert(input_file, output_file)
 
-    assert output_file.read_text() == "docx"
+    assert output_file.read_text() == "doc"
     assert result == output_file

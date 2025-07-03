@@ -14,9 +14,9 @@ from .converter import convert
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Convert Markdown to a Word .docx file")
+    parser = argparse.ArgumentParser(description="Convert Markdown to a Word .doc file")
     parser.add_argument("input", type=Path, help="Markdown file")
-    parser.add_argument("output", type=Path, help="Output .docx file")
+    parser.add_argument("output", type=Path, help="Output .doc file")
 
     args = parser.parse_args(argv)
 
