@@ -1,7 +1,7 @@
 # md-to-confluence
 
 `md-to-confluence` is a command line tool that converts Markdown files into Word
-(`.doc`) documents. The tool relies on Pandoc and provides a simple interface
+(`.docx`) documents. The tool relies on Pandoc and provides a simple interface
 for local documentation workflows.
 
 ## Build requirements
