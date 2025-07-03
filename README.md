@@ -27,7 +27,7 @@ when you install the package.
 After building, install the generated wheel into your environment:
 
 ```bash
-pip install dist/md_to_confluence-<version>-py3-none-any.whl
+pip install dist/md_to_confluence-0.1.0-py3-none-any.whl
 ```
 
 For development, you can install the package in editable mode with:
