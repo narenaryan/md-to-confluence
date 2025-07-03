@@ -36,15 +36,15 @@ For development, you can install the package in editable mode with:
 pip install -e .
 ```
 
-## Testing
+## Usage
 
 The project uses Ruff for linting, Bandit for security checks and Pytest for
 unit tests. After installing these tools, run:
 
 ```bash
-ruff check .
-bandit -r md_to_confluence
-pytest tests
+md-to-confluence input.md output.docx
 ```
 
-A successful run shows zero Bandit issues and all tests passing.
+Now, one can import `output.docx` into Confluence by:
+
+Selecting Three dots (...) -> Templates & Import Doc -> Import -> Microsoft Word & then select "output.docx" from the filesystem.
